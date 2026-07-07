@@ -1,0 +1,45 @@
+[
+    {
+        "name":"Home",
+        "router":"/home"
+    },
+    {
+        "name":"Casino",
+        "router":"/casino"
+    },
+    {
+        "name":"Live casino",
+        "router":"/livecasino"
+    },
+    {
+        "name":"Dybet",
+        "router":"/dybet"
+    },
+    {
+        "name":"Aviator",
+        "router":"/crash"
+    },
+    {
+        "name":"Table",
+        "router":"/table"
+    },
+    {
+        "name":"Fishing",
+        "router":"/fishing"
+    },
+  
+    {
+        "name":"Bingo",
+        "router":"/bingo"
+    }
+    ,
+    {
+        "name":"Keno",
+        "router":"/keno"
+    } ,
+    {
+        "name":"Football",
+        "router":"/football"
+    } 
+  
+]

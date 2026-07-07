@@ -1,0 +1,249 @@
+<nav id="navbar">
+    <div class="nav-container">
+        <div class="F_H_T">
+            <div>
+                <a class="logo-link" routerLink="/home">
+                   <img src="../../assets/images/dybet.png" alt="logo"   width="180" height="51"  fetchpriority="high" loading="eager">
+                </a>
+
+            </div>
+       <!-- language dropdown -->
+
+               
+            <div class="cta-container header_buttons" *ngIf="!isLoggedIn">
+                <div class="custom-language-dropdown mobile_none" (click)="toggleDropdown()">
+
+                    <div class="selected-language">
+                  <img src="assets/language/{{selectedLanguage}}.png" alt="language" width="24" height="24" loading="lazy">    {{ selectedLanguageName }}
+                      <span class="arrow" [class.rotate]="dropdownOpen">
+                        ▼
+                      </span>
+                    </div>
+                  
+                    <div
+                      class="dropdown-menu"
+                      *ngIf="dropdownOpen"
+                    >
+                  
+                      <div
+                        class="dropdown-item"
+                        *ngFor="let lang of languages"
+                        (click)="changeLanguage(lang.code,$event)"
+                        [class.active]="selectedLanguage === lang.code"
+                      >
+                  
+                      <img src="assets/language/{{lang.code}}.png" width="24" height="24" [alt]="lang.name"  loading="lazy"/> {{ lang.name }}
+                  
+                        <span *ngIf="selectedLanguage === lang.code">
+                          ✓
+                        </span>
+                  
+                      </div>
+                  
+                    </div>
+                  
+                  </div>
+                  <button
+                  type="button" (click)="openLogin()" class="cta-button cta-primary">
+                    {{'Login' | translate}}
+                  </button>
+                <button
+                type="button" (click)="openRegister()" class="cta-button cta-secondary">
+                    {{'Register' | translate}}
+                </button>
+            </div>
+    
+            <div class="player-profile-container" *ngIf="isLoggedIn && playerName">
+                <div class="custom-language-dropdown mobile_none" (click)="toggleDropdown()">
+
+                    <div class="selected-language">
+                    <img src="assets/language/{{selectedLanguage}}.png" alt="language" width="24" height="24" loading="lazy">  {{ selectedLanguageName }}
+                      <span class="arrow" [class.rotate]="dropdownOpen">
+                        ▼
+                      </span>
+                    </div>
+                  
+                    <div
+                      class="dropdown-menu"
+                      *ngIf="dropdownOpen"
+                    >
+                  
+                      <div
+                        class="dropdown-item"
+                        *ngFor="let lang of languages"
+                        (click)="changeLanguage(lang.code, $event)"
+                        [class.active]="selectedLanguage === lang.code"
+                      >
+                  
+                      <img src="assets/language/{{lang.code}}.png" [alt]="lang.name" width="24" height="24" loading="lazy"/>  {{ lang.name }}
+                  
+                        <span *ngIf="selectedLanguage === lang.code">
+                          ✓
+                        </span>
+                  
+                      </div>
+                  
+                    </div>
+                  
+                  </div>
+                <a   class="cta-button cta-secondary mobile_none deposit_btn" routerLink="/deposit">
+                    {{'Deposit' | translate}}
+                </a>
+                <img src="assets/deposit.png" alt="deposit" class="mobile_black deposit_img" routerLink="/deposit"  loading="lazy"/> 
+                <img src="assets/user.png" alt="user" class="mobile_none" routerLink="/profile" style="cursor: pointer;">  
+                <div class="balance-container" (click)="toggleBalanceVisibility()">
+                    <div class="player-name">{{ playerName }}</div>
+                    <div class="balance-content">
+                        <i class="fas fa-coins balance-icon"></i>
+                        <span class="balance-amount">{{ showBalance ? getFormattedBalance() : '* * * * * *' }}</span>
+                    </div>
+                </div>               
+    
+                <a (click)="openLogoutPopup()" class="cta-button cta-secondary mobile_none">
+                    <i class="fa-solid fa-right-from-bracket" style="color: var(--color-secondary); font-size: 18px;"></i>
+               
+                </a>
+    
+            </div>
+    
+            <div class="menu-toggle" id="menuToggle" *ngIf="isLoggedIn" (click)="toggleMobileMenu()"
+                [class.active]="isMobileMenuOpen">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+        <div class="S_H_T">
+            <ul>
+
+                <li *ngFor="let head of headerrespose"
+                    [routerLink]="head.router"
+                    routerLinkActive="active-link"
+                    #rla="routerLinkActive">
+            
+                    <!-- NORMAL ICON -->
+                    <img
+                        *ngIf="!rla.isActive"
+                        [src]="'../../assets/images/header_icon_W/' + head.name.toLowerCase().replace(' ', '') + '.png'"
+                        [alt]="head.name">
+            
+                    <!-- ACTIVE ICON -->
+                    <img
+                        *ngIf="rla.isActive"
+                        [src]="'../../assets/images/header_icon_Y/' + head.name.toLowerCase().replace(' ', '') + '.png'"
+                        [alt]="head.name">
+            
+                    <span>{{head.name | translate}}</span>
+            
+                </li>
+            
+            </ul>
+        </div>
+
+ 
+    </div>
+
+    <div class="mobile-menu"    [class.active]="isMobileMenuOpen">
+
+        <div class="mobile-player-profile" *ngIf="isLoggedIn && playerName">
+
+            <!-- <a (click)="openLogoutPopup(); toggleMobileMenu()" class="cta-button cta-secondary"
+                style="width: fit-content; height: 40px; border-color: var(--color-border-light); display: flex; align-items: center; justify-content: center; gap: 6px;">
+                <i class="fa-solid fa-right-from-bracket" style="color: var(--color-secondary); font-size: 18px;"></i>
+             
+            </a> -->
+
+            <!-- <a (click)="closeMobileMenu()" class="cta-button cta-secondary" routerLink="/deposit">
+                {{'Deposit' | translate}}
+            </a>  -->
+
+            <div class="tab-item" style="color: #f00;" (click)="openLogoutPopup(); toggleMobileMenu()">
+           <i class='fas fa-power-off' ></i>
+            <span class="text">{{'Logout' | translate}}</span>
+        </div> 
+            <div class="tab-item" (click)="closeMobileMenu()" [class.active]="isActive('/game-history')"
+            routerLink="/game-history">
+            <i class="fas fa-history"></i>
+            <span class="text">{{'Game History' | translate}}</span>
+        </div> 
+        <div class="tab-item" (click)="closeMobileMenu()" [class.active]="isActive('/transactions')"
+        routerLink="/transactions">
+        <i class="fas fa-exchange-alt"></i>
+        <span class="text">{{'Transactions' | translate}}</span>
+    </div>
+    <div class="tab-item" (click)="closeMobileMenu()" [class.active]="isActive('/deposit')" routerLink="/deposit">
+      <i class="fas fa-money-bill-wave"></i>
+      <span class="text">{{'Deposit' | translate}}</span>
+  </div>
+  <div class="tab-item" (click)="closeMobileMenu()" [class.active]="isActive('/balance')" routerLink="/balance">
+      <i class="fas fa-wallet"></i>
+      <span class="text">{{'My Balance' | translate}}</span>
+  </div>
+              <div class="tab-item" (click)="closeMobileMenu()" [class.active]="isActive('/profile')" routerLink="/profile">
+                  <i class="fas fa-user"></i>
+                  <span class="text">{{'Profile' | translate}}</span>
+              </div>
+        
+              <!-- <div class="tab-item" [class.active]="isActive('/cashout')" routerLink="/cashout">
+                  <i class="fas fa-wallet"></i>
+                  <span class="text">{{ 'Cashouts' | translate }}</span>
+              </div> -->
+           
+         
+
+            <div class="mobile-balance-container" (click)="toggleBalanceVisibility()">
+                <div class="player-name">{{ playerName }}</div>
+                <div class="balance-content">
+                   <!-- {{currencySymbol}} -->
+                    <span class="balance-amount">{{ showBalance ? getFormattedBalance() : '* * * * * *' }}</span>
+                </div>
+            </div>
+ 
+        </div>
+    </div>
+</nav>
+
+
+<!-- logout popup overlay -->
+<div class="logout-popup-overlay" *ngIf="showLogoutPopup">
+
+    <div class="logout-popup">
+  
+      <!-- icon -->
+      <div class="logout-icon">
+        <i class="fas fa-sign-out-alt"></i>
+      </div>
+  
+      <!-- title -->
+      <h2>
+        {{'Logout' | translate}}
+      </h2>
+  
+      <!-- message -->
+      <p>
+        {{'Are you sure you want to logout from your account?' | translate}}
+      </p>
+  
+      <!-- buttons -->
+      <div class="logout-actions">
+  
+        <button
+          class="cancel-btn"
+          (click)="showLogoutPopup = false"
+        >
+          {{'Cancel' | translate}}
+        </button>
+  
+        <button
+          class="logout-btn"
+          (click)="onLogout()"
+        >
+          {{'Logout' | translate}}
+        </button>
+  
+      </div>
+  
+    </div>
+  
+  </div>

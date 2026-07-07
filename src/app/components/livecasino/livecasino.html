@@ -1,0 +1,207 @@
+
+
+<div class="casino-header">
+
+    <h2>{{'Live casino' | translate}}</h2>
+  
+    <div class="casino-filters">
+  
+      <!-- Provider Dropdown -->
+      <div class="provider-wrapper" #dropdownContainer>
+
+        <div class="provider-box"
+             (click)="toggleDropdown($event)">
+      
+          <div class="selected-provider">
+            {{ selectedProvider | translate}}
+          </div>
+      
+          <div class="arrow-icon">
+            <i class="fas"
+               [ngClass]="showProviders ? 'fa-chevron-up' : 'fa-chevron-down'">
+            </i>
+          </div>
+      
+        </div>
+      
+        <div class="provider-list" *ngIf="showProviders">
+      
+          <div class="provider-item"
+               *ngFor="let provider of providers"
+               (click)="selectProvider(provider)"   [class.active-provider]="provider.name === selectedProvider">
+      
+            {{ provider.name | translate}}
+            <i
+            class="fas fa-check active-icon"
+            *ngIf="provider.name === selectedProvider"
+          ></i>
+          </div>
+      
+        </div>
+      
+      </div>
+  
+  
+      <!-- Search -->
+  
+      <input
+        type="text"
+        class="game-search"
+        [placeholder]="'Search games...' | translate"
+        [(ngModel)]="searchText"
+        (input)="searchGames()"
+      />
+  
+    </div>
+  
+  </div>
+  
+  <div
+    class="provider-section"
+    *ngFor="let item of groupedGames"
+  >
+  
+    <div class="provider-top">
+  
+      <h3>
+       <img src="../../assets/providerIicons/{{item.provider}}.png" [alt]="item.provider"  loading="lazy" width="30px" height="30px"/> {{ item.provider | titlecase }}
+      </h3>
+  
+      <button
+      class="show-btn"
+      *ngIf="item.totalGames > 15 && !singleProviderView"
+      (click)="showAllGames(item.provider)"
+    >
+      {{'Show All' | translate}}
+    </button>
+  
+    </div>
+  
+    <div class="games-grid" [class.all-games-grid]="showAllMode">
+  
+      <div
+        class="game-card"  (click)="launchGame(game)"
+        *ngFor="
+        let game of item.games;
+        let i = index;
+        trackBy: trackByGame
+      "
+      >
+  
+      <div class="game-image-wrapper">
+
+        <!-- Skeleton Loader -->
+        <div class="image-loader"></div>
+    
+        <!-- Game Image -->
+        <img
+          [src]="game.imageUrl"
+          [alt]="game.gameName"
+          loading="lazy"
+          class="game-image"
+          (load)="onImageLoad($event)"
+        >
+    
+      </div>
+  
+        <p> <img src="../../assets/providerIicons/{{item.provider}}.png" [alt]="item.provider" class="provider_icon"  loading="lazy" width="22px" height="22px"/> {{ game.gameName }}</p>
+  
+      </div>
+  
+    </div>
+    <div
+    class="no-games"
+    *ngIf="
+      groupedGames.length === 0 ||
+      (groupedGames.length &&
+       groupedGames[0].games.length === 0)
+    "
+  >
+    {{'No games found' | translate}}
+  </div>
+  <div
+  class="load-more-wrapper"
+  *ngIf="
+    singleProviderView &&
+    visibleGames.length < filteredGames.length
+  "
+>
+
+  <button
+    class="load-more-btn"
+    (click)="loadMoreGames()"
+    [disabled]="isLoadingMore"
+  >
+    {{ isLoadingMore ? 'Loading...' : 'Show More' }}
+  </button>
+
+</div>
+  </div>
+
+  <div class="page-loader" *ngIf="isLoading">
+    <svg  viewBox="0 0 56 56" width="56px" height="56px" role="img" 
+      aria-label="Hourglass being flipped clockwise and circled by three white curves fading in and out" class="hourglass">
+      <clipPath  id="sand-mound-top">
+        <path 
+          d="M 14.613 13.087 C 15.814 12.059 19.3 8.039 20.3 6.539 C 21.5 4.789 21.5 2.039 21.5 2.039 L 3 2.039 C 3 2.039 3 4.789 4.2 6.539 C 5.2 8.039 8.686 12.059 9.887 13.087 C 11 14.039 12.25 14.039 12.25 14.039 C 12.25 14.039 13.5 14.039 14.613 13.087 Z"
+          class="hourglass__sand-mound-top"></path>
+      </clipPath>
+      <clipPath  id="sand-mound-bottom">
+        <path 
+          d="M 14.613 20.452 C 15.814 21.48 19.3 25.5 20.3 27 C 21.5 28.75 21.5 31.5 21.5 31.5 L 3 31.5 C 3 31.5 3 28.75 4.2 27 C 5.2 25.5 8.686 21.48 9.887 20.452 C 11 19.5 12.25 19.5 12.25 19.5 C 12.25 19.5 13.5 19.5 14.613 20.452 Z"
+          class="hourglass__sand-mound-bottom"></path>
+      </clipPath>
+      <g  transform="translate(2,2)">
+        <g  fill="none" stroke="hsl(0,0%,100%)" stroke-dasharray="153.94 153.94"
+          stroke-dashoffset="153.94" stroke-linecap="round" transform="rotate(-90,26,26)">
+          <circle  stroke-width="2.5" cx="26" cy="26" r="24.5" transform="rotate(0,26,26)"
+            class="hourglass__motion-thick"></circle>
+          <circle  stroke-width="1.75" cx="26" cy="26" r="24.5" transform="rotate(90,26,26)"
+            class="hourglass__motion-medium"></circle>
+          <circle  stroke-width="1" cx="26" cy="26" r="24.5" transform="rotate(180,26,26)"
+            class="hourglass__motion-thin"></circle>
+        </g>
+        <g  transform="translate(13.75,9.25)" class="hourglass__model">
+          <path  fill="#fff"
+            d="M 1.5 2 L 23 2 C 23 2 22.5 8.5 19 12 C 16 15.5 13.5 13.5 13.5 16.75 C 13.5 20 16 18 19 21.5 C 22.5 25 23 31.5 23 31.5 L 1.5 31.5 C 1.5 31.5 2 25 5.5 21.5 C 8.5 18 11 20 11 16.75 C 11 13.5 8.5 15.5 5.5 12 C 2 8.5 1.5 2 1.5 2 Z">
+          </path>
+          <g  stroke="#f7c133" stroke-linecap="round">
+            <line  stroke-width="1" stroke-dasharray="0.25 33.75" x1="12" y1="15.75" x2="12"
+              y2="20.75" class="hourglass__sand-grain-left"></line>
+            <line  stroke-width="1" stroke-dasharray="0.25 33.75" x1="12.5" y1="16.75" x2="12.5"
+              y2="21.75" class="hourglass__sand-grain-right"></line>
+            <line  stroke-width="1" stroke-dasharray="0.5 107.5" x1="12.25" y1="18" x2="12.25"
+              y2="31.5" class="hourglass__sand-drop"></line>
+            <line  stroke-width="1.5" stroke-dasharray="54 54" x1="12.25" y1="14.75" x2="12.25"
+              y2="31.5" class="hourglass__sand-fill"></line>
+            <line  stroke="#f7c133" stroke-width="1" stroke-dasharray="1 107" x1="12" y1="16"
+              x2="12" y2="31.5" class="hourglass__sand-line-left"></line>
+            <line  stroke="#f7c133" stroke-width="1" stroke-dasharray="12 96" x1="12.5" y1="16"
+              x2="12.5" y2="31.5" class="hourglass__sand-line-right"></line>
+            <g  fill="#f7c133" stroke-width="0">
+              <path  clip-path="url(#sand-mound-top)"
+                d="M 12.25 15 L 15.392 13.486 C 21.737 11.168 22.5 2 22.5 2 L 2 2.013 C 2 2.013 2.753 11.046 9.009 13.438 L 12.25 15 Z">
+              </path>
+              <path  clip-path="url(#sand-mound-bottom)"
+                d="M 12.25 18.5 L 15.392 20.014 C 21.737 22.332 22.5 31.5 22.5 31.5 L 2 31.487 C 2 31.487 2.753 22.454 9.009 20.062 Z">
+              </path>
+            </g>
+          </g>
+          <g  fill="none" opacity="0.7" stroke-linecap="round" stroke-width="2">
+            <path  stroke="hsl(0,0%,100%)"
+              d="M 19.437 3.421 C 19.437 3.421 19.671 6.454 17.914 8.846 C 16.157 11.238 14.5 11.5 14.5 11.5"
+              class="hourglass__glare-top"></path>
+            <path  stroke="hsla(0,0%,100%,0)"
+              d="M 19.437 3.421 C 19.437 3.421 19.671 6.454 17.914 8.846 C 16.157 11.238 14.5 11.5 14.5 11.5"
+              transform="rotate(180,12.25,16.75)" class="hourglass__glare-bottom"></path>
+          </g>
+          <rect  fill="#f7c133" width="24.5" height="2"></rect>
+          <rect  fill="#f7c133" rx="0.5" ry="0.5" x="2.5" y="0.5" width="19.5" height="1">
+          </rect>
+          <rect  fill="#f7c133" y="31.5" width="24.5" height="2"></rect>
+          <rect  fill="#f7c133" rx="0.5" ry="0.5" x="2.5" y="32" width="19.5" height="1"></rect>
+        </g>
+      </g>
+    </svg>
+
+  </div>

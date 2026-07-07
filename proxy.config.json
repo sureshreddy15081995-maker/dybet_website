@@ -1,0 +1,29 @@
+{
+  "/api/": {
+    "target": "http://dybet.bet/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+
+  "/rest/": {
+    "target": "http://dybet.bet/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+
+  "/uploads/": {
+    "target": "https://dybet.bet/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+
+  "/capi/": {
+    "target": "https://dybet.bet/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

@@ -1,0 +1,42 @@
+<div class="game-wrapper">
+
+    <button
+      class="close-btn"
+      (click)="closeGame()">
+  
+      ✕
+  
+    </button>
+  
+    <iframe
+    [src]="gameUrl"
+    allowfullscreen
+    frameborder="0"
+
+    allow="
+      autoplay;
+      fullscreen;
+      clipboard-read;
+      clipboard-write;
+      geolocation;
+      microphone;
+      camera;
+      payment;
+      accelerometer;
+      gyroscope
+    "
+
+    sandbox="
+      allow-same-origin
+      allow-scripts
+      allow-popups
+      allow-forms
+      allow-downloads
+      allow-modals
+      allow-pointer-lock
+      allow-top-navigation-by-user-activation
+    "
+  >
+  </iframe>
+  
+  </div>

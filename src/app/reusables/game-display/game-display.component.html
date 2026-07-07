@@ -1,0 +1,30 @@
+<div class="game-container">
+    <div *ngIf="isLoading" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Launching game...</p>
+    </div>
+
+    <div class="top-controls-container">
+        <button class="drag-btn back" (mousedown)="startDrag($event)" (touchstart)="startDrag($event)"
+            style="min-width: fit-content;" (click)="onBackClick($event)" (mouseenter)="onMouseEnter()"
+            (mouseleave)="onMouseLeave()" [ngStyle]="{
+                    left: btnPosition.left + 'px',
+                    top: btnPosition.top + 'px',
+                    opacity: btnOpacity
+                }" [class.active]="isDragging" [class.pulse]="showPulse" [class.dragging]="isDragging">
+            <!-- <i class="fas fa-arrow-left"></i> -->
+            <!-- <i class="fa-solid fa-xmark"></i> -->
+            <!-- <span class="btn-text">Back</span> -->
+            <span class="btn-text">&#10005;</span>
+            <div class="ripple-effect" *ngIf="showRipple"></div>
+        </button>
+    </div>
+
+    <iframe *ngIf="sanitizedUrl" [src]="sanitizedUrl" frameborder="0" allowfullscreen class="game-iframe"
+        (load)="onGameLoad()">
+    </iframe>
+
+    <div *ngIf="!sanitizedUrl" class="error-message">
+        <p>Game not found.</p>
+    </div>
+</div>

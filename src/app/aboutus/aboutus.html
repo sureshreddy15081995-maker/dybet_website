@@ -1,0 +1,140 @@
+<div class="container" style="margin: auto;">
+    <div class="header_text">
+        <p><img src="assets/profile/left_arrow.png" alt="arrow" class="arrow_btn"  loading="lazy"/> <img src="assets/footerIcon/{{currentTag}}.png" alt="currentTag" style="margin-right: 10px;width: 28px;margin-left: 10px;"  loading="lazy" /> {{currentTag.replace('-',' ') | translate}} </p>
+    </div>
+    <div class="body_header" *ngIf="currentTag == 'about-us'">
+        <p>{{'Dybet is the number one destination for sports betting enthusiasts. Founded with the vision of offering an
+            unparalleled betting experience, our platform combines cutting-edge technology, rigorous security, and a
+            deep passion for sport.' | translate}}</p>
+        <p>{{'We are committed to providing the best odds on the market across a wide range of sports, from the most
+            prestigious football leagues to local sporting events.' | translate}}</p>
+        <h3>{{'Our Mission' | translate}}</h3>
+        <p>{{'To offer a safe, fair and entertaining betting environment while promoting responsible gambling.' |
+            translate}}</p>
+    </div>
+    <div class="body_header" *ngIf="currentTag == 'terms-of-use'">
+        <p>{{'By using the services of Dybet, you agree to be bound by the following terms and conditions. Please read
+            them carefully.' | translate}}</p>
+        <h3>1. {{'Eligibility' | translate}}</h3>
+        <p>{{'You must be at least 18 years old to bet on our platform. Access is prohibited for minors.' | translate}}
+        </p>
+        <h3>2. {{'User Accounts' | translate}}</h3>
+        <p>{{'Each user can only have one account. Creating multiple accounts may result in the suspension of all
+            associated accounts.' | translate}}</p>
+        <h3>3. {{'Paris and Gains' | translate}}</h3>
+        <p>{{'All bets are final once accepted by the system. Winnings are credited automatically after official
+            validation of the results.' | translate}}</p>
+
+    </div>
+    <div class="body_header" *ngIf="currentTag == 'confidentiality'">
+        <p>{{'At Dybet, protecting your personal data is our top priority. We use advanced encryption technologies to
+            ensure the security of your information.' | translate}}</p>
+        <h3>{{'Data Collection' | translate}}</h3>
+        <p>{{'We only collect the information necessary to provide our services, such as your name, email address, and
+            payment information.' | translate}}</p>
+        <h3>{{'Use of Information' | translate}}</h3>
+        <p>{{'Your data is never shared with third parties for commercial purposes without your explicit consent.' |
+            translate}}</p>
+    </div>
+    <div class="body_header" *ngIf="currentTag == 'cookies'">
+        <p>{{'At Dybet, protecting your personal data is our top priority. We use advanced encryption technologies to
+            ensure the security of your information.' | translate}}</p>
+        <h3>{{'Data Collection' | translate}}</h3>
+        <p>{{'We only collect the information necessary to provide our services, such as your name, email address, and
+            payment information.' | translate}}</p>
+        <h3>{{'Use of Information' | translate}}</h3>
+        <p>{{'Your data is never shared with third parties for commercial purposes without your explicit consent.' |
+            translate}}</p>
+    </div>
+    <div class="body_header" *ngIf="currentTag == 'aml-policy'">
+        <p>{{'By using the services of Dybet, you agree to be bound by the following terms and conditions. Please read
+            them carefully.' | translate}}</p>
+        <h3>1. {{'Eligibility' | translate}}</h3>
+        <p>{{'You must be at least 18 years old to bet on our platform. Access is prohibited for minors.' | translate}}
+        </p>
+        <h3>2. {{'User Accounts' | translate}}</h3>
+        <p>{{'Each user can only have one account. Creating multiple accounts may result in the suspension of all
+            associated accounts.' | translate}}</p>
+        <h3>3. {{'Paris and Gains' | translate}}</h3>
+        <p>{{'All bets are final once accepted by the system. Winnings are credited automatically after official
+            validation of the results.' | translate}}</p>
+
+    </div>
+    <div class="body_header" *ngIf="currentTag == 'contact-us'">
+
+        <div class="contact-wrapper">
+
+            <!-- Top Info -->
+            <div class="contact-top">
+
+                <div class="contact-info-box">
+                    <h3>{{'24/7 Customer Support' | translate}}</h3>
+                    <p>{{'Available via live chat on the website.' | translate}}</p>
+                </div>
+
+                <div class="contact-info-box">
+                    <h3>{{'E-mail' | translate}}</h3>
+                    <p>support@dybet.bet</p>
+                </div>
+
+            </div>
+
+            <!-- Form -->
+            <div class="contact-form-area">
+
+                <h2>{{'Send us a message' | translate}}</h2>
+                <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+
+<input
+    type="text"
+    formControlName="subject"
+    [placeholder]="'Subject' | translate"
+    class="contact-input"
+>
+
+<input
+    type="text"
+    formControlName="firstName"
+    (keypress)="userNameValid($event)"
+    class="contact-input"
+    placeholder="Name"
+>
+
+<input
+    type="email"
+    formControlName="email"
+    (keypress)="emailValid($event)"
+    class="contact-input"
+    placeholder="Email"
+>
+
+<textarea
+    rows="6"
+    formControlName="userQuestion"
+    [placeholder]="'Your message' | translate"
+    class="contact-textarea"
+></textarea>
+
+<button
+    type="submit"
+    class="send-btn"
+    [disabled]="form.invalid"
+>
+    {{'SEND' | translate}}
+</button>
+
+<div
+    class="errorLable"
+    [ngClass]="{'successLable': successvalue==true}"
+    *ngIf="contactUsErrorMessage"
+>
+    {{contactUsErrorMessage}}
+</div>
+
+</form>
+            </div>
+
+        </div>
+
+    </div>
+</div>

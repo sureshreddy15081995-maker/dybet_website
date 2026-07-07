@@ -1,0 +1,108 @@
+<div class="profile-container content-panel active" *ngIf="playerDetails; else loading">
+
+    <!-- Profile Content -->
+    <div class="profile-content">
+ <div class="heading_header">
+    <h2>{{'Hi' | translate}},</h2>
+    <h5>{{'Welcome to your account' | translate}}</h5>
+ </div>
+
+  
+
+          <table>
+            <tr>
+                <td><img src="assets/profile/login.png" width="20px"  loading="lazy" alt="login"/> {{'Login' | translate}}</td>
+                <td>{{playerDetails.login}}</td>
+            </tr>
+            <tr>
+                <td><img src="assets/profile/email.png" width="20px"  loading="lazy" alt="email"/> {{'Email' | translate}}</td>
+                <td>{{playerDetails.email}}</td>
+            </tr>
+            <tr>
+                <td><img src="assets/profile/password.png" width="20px"  loading="lazy" alt="password"/> {{'Password' | translate}}</td>
+                <td  (click)="togglePasswordModal()"><button class="change_psd">{{'Change Password' | translate}}</button></td>
+            </tr>
+            <tr>
+                <td><img src="assets/profile/phone.png" width="20px"  loading="lazy" alt="phone"/>{{'Phone' | translate}}</td>
+                <td>{{playerDetails.address.phone}}</td>
+            </tr>
+      
+          </table>
+    </div>
+</div>
+
+<!-- Loading State -->
+<ng-template #loading>
+    <section class="loading-section">
+        <div class="loading-container">
+            <div class="neon-spinner"></div>
+            <h2 class="loading-text">{{'Loading Profile' | translate}}</h2>
+            <p class="loading-subtext">{{'Please wait while we fetch your information' | translate}}</p>
+        </div>
+    </section>
+</ng-template>
+
+<!-- Password Modal -->
+<div class="modal-backdrop" *ngIf="showPasswordModal" (click)="togglePasswordModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h2 class="modal-title">{{'Update Password' | translate}}</h2> 
+            <button class="close-btn" (click)="togglePasswordModal()" aria-label="Close login">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg> 
+            </button>
+        </div>
+
+        <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="password-form"> 
+            <div class="form-group">
+                <label for="currentPassword" class="form-label">
+                    {{'Old Password' | translate}}
+                    <span class="required">*</span>
+                </label>
+                <div class="input-container">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input id="currentPassword" type="password" formControlName="currentPassword" class="form-input"
+                        [placeholder]="'Enter old password' | translate" autocomplete="current-password" />
+                </div>
+                <div class="validation-messages">
+                    <div *ngIf="currentPassword?.invalid && currentPassword?.touched" class="error-message">
+                        <span *ngIf="currentPassword?.errors?.['required']">{{'Enter old password' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Password -->
+            <div class="form-group">
+                <label for="newPassword" class="form-label">
+                    {{'New Password' | translate}}
+                    <span class="required">*</span>
+                </label>
+                <div class="input-container">
+                    <i class="fas fa-key input-icon"></i>
+                    <input id="newPassword" type="password" formControlName="newPassword" class="form-input"
+                        [placeholder]="'Enter new password' | translate" autocomplete="new-password" />
+                </div>
+                <div class="validation-messages">
+                    <div *ngIf="newPassword?.invalid && newPassword?.touched" class="error-message">
+                        <span *ngIf="newPassword?.errors?.['required']">{{'Enter new password' | translate}}</span>
+                        <span *ngIf="newPassword?.errors?.['minlength']">{{'Password must be min 6 characters max 15 characters' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" (click)="togglePasswordModal()">
+                    {{'Cancel' | translate}}
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="passwordForm.invalid || isLoading"
+                    [class.loading]="isLoading">
+                    <i class="fas" [class.fa-spinner]="isLoading" [class.fa-spin]="isLoading"
+                        [class.fa-check]="!isLoading"></i>
+                    {{ isLoading ? 'Updating...' : 'Submit' | translate}}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

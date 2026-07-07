@@ -1,0 +1,15 @@
+<div class="message-container">
+    <div *ngFor="let message of messages; let i = index" class="message {{message.type}}" [style.--animation-order]="i">
+        <div class="message-icon">
+            <i class="fas {{getIconClass(message.type)}}"></i>
+        </div>
+        <div class="message-content">
+            <div class="message-title">{{message.title | translate}}</div>
+            <div class="message-text">{{message.content | translate}}</div>
+        </div>
+        <button class="message-close" (click)="removeMessage(message.id)">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="message-timer" [style.animation-duration]="message.duration + 'ms'"></div>
+    </div>
+</div>

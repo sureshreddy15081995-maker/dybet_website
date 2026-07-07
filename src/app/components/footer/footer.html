@@ -1,0 +1,138 @@
+<footer class="footer">
+    <div class="footer-container">
+  
+      <!-- Top Section -->
+      <div class="footer-grid">
+  
+        <!-- Column 1 -->
+        <div class="footer-column">
+          <h3>DYBET</h3>
+  
+          <ul>
+            <li><a routerLink="/about-us">{{'about us' | translate}}</a></li>
+            <li><a routerLink="/terms-of-use">{{'terms of use' | translate}}</a></li>
+            <li><a routerLink="/confidentiality">{{'confidentiality' | translate}}</a></li>
+            <li><a routerLink="/cookies">{{'cookies' | translate}}</a></li>
+          </ul>
+        </div>
+  
+        <!-- Column 2 -->
+        <div class="footer-column">
+          <h3>{{'INFORMATION' | translate}}</h3>  
+          <ul>
+            <li><a routerLink="/responsible-gaming">{{'responsible gaming' | translate}}</a></li>
+            <li><a routerLink="/aml-policy">{{'aml policy' | translate}}</a></li>
+            <li><a routerLink="/help">{{'help' | translate}}</a></li>
+            <li><a routerLink="/contact-us">{{'contact us' | translate}}</a></li>
+          </ul>
+        </div>
+  
+        <!-- Column 3 -->
+        <div class="footer-column">
+          <h3>{{'CONTACT' | translate}}</h3>
+  
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>support@dybet.bet</span>
+          </div>
+  
+          <div class="contact-item">
+            <i class="fab fa-whatsapp"></i>
+            <span>WhatsApp +243 XXX XXX</span>
+          </div>
+  
+          <div class="contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <span>{{'Response within 24 hours' | translate}}</span>
+          </div>
+        </div>
+  
+        <!-- Column 4 -->
+        <div class="footer-column">
+          <h3>{{'SECURITY' | translate}}</h3>
+  
+          <div class="contact-item">
+            <strong>18+</strong>
+            <span>{{'Responsible gaming'  | translate}}</span>
+          </div>
+        </div>
+  
+      </div>
+  
+      <!-- Divider -->
+      <div class="divider"></div>
+  
+      <!-- Payment Methods -->
+      <div class="payment-section">
+  
+        <span class="payment-title">
+          {{'PAYMENT METHODS' | translate}}
+        </span>
+  
+        <div class="payments">
+          <span>MTN</span>
+          <span>LINK</span> 
+        </div>
+  
+        <div class="gamble-warning">
+          <strong>18+</strong>
+  
+          <p>
+          {{"Gambling involves risks: debt, addiction." | translate}}<br>
+           {{'Gamble responsibly.' | translate}}
+          </p>
+        </div>
+  
+      </div>
+  
+      <!-- Divider -->
+      <div class="divider"></div>
+  
+      <!-- Bottom -->
+      <div class="footer-bottom">
+  
+        <p aria-label="copyright">
+          © {{year}} Dybet.
+          {{ 'All rights reserved. Licensed sports betting and casino platform.' | translate }}
+        </p>
+        <div class="custom-language-dropdown mobile_black" (click)="toggleDropdown()">
+
+          <div class="selected-language">
+          <img src="assets/language/{{selectedLanguage}}.png" alt="language" width="24" height="24"  loading="lazy">  {{ selectedLanguageName }}
+            <span class="arrow" [class.rotate]="dropdownOpen">
+              ▼
+            </span>
+          </div>
+        
+          <div
+            class="dropdown-menu"
+            *ngIf="dropdownOpen"
+          >
+        
+            <div
+              class="dropdown-item"
+              *ngFor="let lang of languages"
+              (click)="changeLanguage(lang.code)"
+              [class.active]="selectedLanguage === lang.code"
+            >
+        
+            <img src="assets/language/{{lang.code}}.png" [alt]="lang.name" width="24" height="24"  loading="lazy">  {{ lang.name }}
+        
+              <span *ngIf="selectedLanguage === lang.code">
+                ✓
+              </span>
+        
+            </div>
+        
+          </div>
+        
+        </div>
+        <button (click)="topview()" class="top-btn"   type="button">
+          {{"Top of page" | translate}}
+          <i class="fas fa-chevron-up"></i>
+        </button>
+  
+      </div>
+  
+    </div>
+  </footer>

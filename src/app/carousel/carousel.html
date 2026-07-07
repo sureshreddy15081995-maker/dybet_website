@@ -1,0 +1,12 @@
+<div class="banner-wrapper" #scrollContainer *ngIf="bannerEngList">
+    <div class="banner-track">
+      <div class="banner-card" *ngFor="let img of bannerEngList; let i = index">
+          <div class="banner-skeleton" [class.hide]="bannerLoaded[i]"></div>
+        <img (load)="bannerLoaded[i] = true" loading="eager"
+          [src]="img?.heroBanner?.url"
+          [routerLink]="img?.routerLink"
+          alt="banner"
+        />
+      </div>
+    </div>
+  </div>

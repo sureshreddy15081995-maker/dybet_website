@@ -1,0 +1,269 @@
+.footer {
+    background: #1b2740;
+    color: #b9c2d0;
+    padding: 50px 40px 25px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .footer-container {
+  width: 100%;
+    margin: auto;
+  }
+  
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+  }
+  
+  .footer-column h3 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+  }
+  
+  .footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-column ul li {
+    margin-bottom: 16px;
+  }
+  
+  .footer-column ul li a {
+    text-decoration: none;
+    color: #8e9eb6;
+    transition: 0.3s;
+    font-size: 13px;
+  }
+  
+  .footer-column ul li a:hover {
+    color: #fff;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    color: #b9c2d0;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .contact-item i {
+    color: #f0b90b;
+    transition: 0.3s ease;
+  }
+  .contact-item:hover {
+    color: #ffffff;
+    transform: translateX(5px);
+  }
+  
+  .contact-item:hover i {
+    color: #00ff9d;
+  }
+  .security-item i {
+    color: #00ff9d;
+  }
+  
+  .security-item.active span {
+    color: #00ff9d;
+    font-weight: 600;
+  }
+  
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 35px 0;
+  }
+  
+  .payment-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .payment-title {
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: #8892a0;
+    font-weight: 700;
+  }
+  
+  .payments {
+    display: flex;
+    gap: 40px;
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  .gamble-warning {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #cfd6e2;
+    font-size: 13px;
+  }
+  
+  .gamble-warning strong {
+    color: #ffd000;
+    font-size: 18px;
+  }
+  
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .footer-bottom p {
+    font-size: 13px;
+    color: #7f8b9d;
+  }
+  
+  .top-btn { 
+      color: #cfd6e2;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 5px;
+      background: none;
+      border: none;
+  }
+  
+  .top-btn:hover {
+    color: #fff;
+  }
+  
+.custom-language-dropdown {
+  position: relative;
+  width: 115px;
+  cursor: pointer;
+  user-select: none;
+  z-index: 9999;
+}
+
+.selected-language  {
+  /* height: 48px; */
+  padding: 0 18px;
+  background: #151515;
+  border: 1px solid #f3d35f;
+  border-radius: 12px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  transition: 0.3s;
+  padding: 6px 6px;
+}
+
+.selected-language:hover {
+  border-color: #ffd84d;
+}
+
+.arrow {
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: -90px;
+  left: 0;
+  width: 100%;
+  background: #111;
+  border: 1px solid #f3d35f;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  animation: dropdownAnimation 0.25s ease;
+}
+
+.dropdown-item {
+  padding: 10px;
+  color: #fff;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: 0.2s;
+}
+
+.dropdown-item:hover {
+  background: #222;
+}
+
+.dropdown-item.active {
+  background: #f3d35f;
+  color: #000;
+  font-weight: 600;
+}
+
+@keyframes dropdownAnimation {
+
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  /* Responsive */
+  @media (max-width: 991px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .payment-section {
+      gap: 25px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .footer {
+      padding: 40px 20px;
+    }
+  
+    .footer-grid {
+      grid-template-columns:  repeat(2, 1fr);
+      gap: 15px;
+    }
+  
+    .payments {
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+  
+    .footer-bottom {
+      flex-direction: column;
+      gap: 15px;
+      align-items: flex-start;
+    }
+    .footer-column  h3{ 
+        font-size: 16px; 
+        margin-bottom: 15px; 
+    }
+    .footer-column  ul  li{
+        margin-bottom: 10px;
+    }
+    .contact-item{ 
+        gap: 6px;
+        margin-bottom: 10px; 
+    }
+  }

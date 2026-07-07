@@ -1,0 +1,99 @@
+<div class="casino-header">
+  <h2>{{'Casino' | translate}}</h2>
+
+  <div class="casino-filters">
+
+    <!-- Provider Dropdown -->
+    <div class="provider-wrapper" #dropdownContainer>
+
+      <div class="provider-box" (click)="toggleDropdown($event)">
+
+        <div class="selected-provider">
+          {{ selectedProvider | translate}}
+        </div>
+
+        <div class="arrow-icon">
+          <i class="fas" [ngClass]="showProviders ? 'fa-chevron-up' : 'fa-chevron-down'">
+          </i>
+        </div>
+
+      </div>
+
+      <div class="provider-list" *ngIf="showProviders">
+
+        <div class="provider-item" *ngFor="let provider of providers" (click)="selectProvider(provider)"
+          [class.active-provider]="provider.name === selectedProvider">
+
+          {{ provider.name | translate}}
+          <i class="fas fa-check active-icon" *ngIf="provider.name === selectedProvider"></i>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Search -->
+
+    <input type="text" class="game-search" [placeholder]="'Search games...' | translate" [(ngModel)]="searchText"
+      (input)="searchGames()" />
+
+  </div>
+
+</div>
+
+<div class="provider-section" *ngFor="let item of groupedGames">
+
+  <div class="provider-top">
+
+    <h3>
+      <img src="../../assets/providerIicons/{{item.provider}}.png" [alt]="item.provider" loading="lazy" width="30px" height="30px"/> {{
+      item.provider | titlecase }}
+    </h3>
+
+    <button class="show-btn" *ngIf="item.totalGames > 15 && !singleProviderView" (click)="showAllGames(item.provider)">
+      {{'Show All' | translate}}
+    </button>
+
+  </div>
+
+  <div class="games-grid" [class.all-games-grid]="showAllMode">
+
+    <div class="game-card" (click)="launchGame(game)" *ngFor="
+        let game of item.games;
+        let i = index;
+        trackBy: trackByGame
+      ">
+
+      <div class="game-image-wrapper">
+
+        <!-- Skeleton Loader -->
+        <div class="image-loader"></div>
+
+        <!-- Game Image -->
+        <img [src]="game.imageUrl" [alt]="game.gameName" loading="lazy" class="game-image" (load)="onImageLoad($event)">
+
+      </div>
+      <p> <img src="../../assets/providerIicons/{{item.provider}}.png" [alt]="item.provider" class="provider_icon"
+          loading="lazy" width="22px" height="22px"/> {{ game.gameName }}</p>
+
+    </div>
+
+  </div>
+  <div class="no-games" *ngIf="
+      groupedGames.length === 0 ||
+      (groupedGames.length &&
+       groupedGames[0].games.length === 0)
+    ">
+    {{'No games found' | translate}}
+  </div>
+  <div class="load-more-wrapper" *ngIf="
+    singleProviderView &&
+    visibleGames.length < filteredGames.length
+  ">
+
+    <button class="load-more-btn" (click)="loadMoreGames()" [disabled]="isLoadingMore">
+      {{ isLoadingMore ? "Loading..." : 'Show More' | translate}}
+    </button>
+
+  </div>
+</div>

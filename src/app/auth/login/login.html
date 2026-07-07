@@ -1,0 +1,125 @@
+<div class="login-modal" [class.visible]="isVisible" (click)="onBackdropClick($event)">
+    <div #loginContainer class="login-container" [class.visible]="isVisible" [class.shake]="shakeForm">
+        <div class="floating-particles">
+            <div class="particle" *ngFor="let particle of [1,2,3,4,5,6]"></div>
+        </div>
+
+        <div class="login-header">
+            <h3>login to <span style="color: #f5cf3b;">dybet</span></h3>
+
+            <button class="close-btn" (click)="closePopup()" aria-label="Close login">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()" class="login-form">
+            <div class="form-group" [class.focused]="usernameFocused"
+                [class.error]="username?.invalid && (username?.touched || username?.dirty)"
+                [class.valid]="username?.valid && username?.touched">
+                <label>{{'Username' | translate}} <span>*</span></label>
+                <div class="input-container">
+                    <div class="input-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <path
+                                d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                stroke="currentColor" stroke-width="2" />
+                        </svg>
+                    </div>
+                    <input type="text" formControlName="username" [placeholder]="'Username' | translate"
+                        (focus)="usernameFocused = true" (blur)="usernameFocused = false" />
+                    <div class="validation-icon" *ngIf="username?.valid && username?.touched">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="error" *ngIf="username?.invalid && (username?.touched || username?.dirty)">
+                    <small *ngIf="username?.errors?.['required']">{{'Username is required' | translate}}</small>
+                </div>
+            </div>
+
+            <div class="form-group" [class.focused]="passwordFocused"
+                [class.error]="password?.invalid && (password?.touched || password?.dirty)"
+                [class.valid]="password?.valid && password?.touched">
+                <label>{{'Password' | translate}} <span>*</span></label>
+                <div class="input-container">
+                    <div class="input-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 15V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <path
+                                d="M5 11C5 8.79086 6.79086 7 9 7H15C17.2091 7 19 8.79086 19 11V19C19 21.2091 17.2091 23 15 23H9C6.79086 23 5 21.2091 5 19V11Z"
+                                stroke="currentColor" stroke-width="2" />
+                            <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <input [type]="passwordVisible ? 'text' : 'password'" formControlName="password"
+                        [placeholder]="'Password' | translate" (focus)="passwordFocused = true" (blur)="passwordFocused = false" />
+                    <button type="button" class="toggle-pass" (click)="togglePasswordVisibility()"
+                        [class.active]="passwordVisible">
+                        <span>{{ passwordVisible ? 'Hide' : 'Show' }}</span>
+                        <svg *ngIf="!passwordVisible" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z"
+                                stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                                stroke="currentColor" stroke-width="2" />
+                        </svg>
+                        <svg *ngIf="passwordVisible" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M14.12 14.12C13.8454 14.4147 13.5141 14.6512 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1752 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.481 9.80385 14.1962C9.51903 13.9113 9.29444 13.5719 9.14351 13.1984C8.99259 12.8248 8.91853 12.4247 8.92563 12.0219C8.93274 11.6191 9.02091 11.2218 9.18488 10.8538C9.34884 10.4859 9.58525 10.1546 9.88 9.88M17.94 17.94C16.2306 19.243 14.1491 19.9649 12 20C5 20 1 12 1 12C2.24389 9.6819 3.96914 7.65661 6.06 6.06L17.94 17.94ZM9.9 4.24C10.5883 4.07888 11.2931 3.99834 12 4C19 4 23 12 23 12C22.393 13.1356 21.6691 14.2047 20.84 15.19L9.9 4.24Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M1 1L23 23" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                    <div class="validation-icon" *ngIf="password?.valid && password?.touched">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="error" *ngIf="password?.invalid && (password?.touched || password?.dirty)">
+                    <small *ngIf="password?.errors?.['required']">{{'Password is required' | translate}}</small>
+                    <small *ngIf="password?.errors?.['minlength']">{{'Password must be at least 6 characters'| translate}}</small>
+                </div>
+            </div>
+
+            <div class="remember-me">
+                <label class="checkbox-container">
+                    <input type="checkbox" [checked]="rememberMe" (change)="onRemember()" />
+                    <span class="checkmark"></span>
+                    {{'Remember me' | translate}}
+                </label>
+            </div>
+
+            <button class="login-btn" [disabled]="isLoading" [class.loading]="isLoading">
+                <span class="btn-text">{{ isLoading ? 'Logging in...' : 'Login' | translate}}</span>
+                <div class="btn-loader" *ngIf="isLoading">
+                    <div class="loader-spinner"></div>
+                </div>
+            </button>
+
+            <div class="register-link">
+                {{'Not a member' | translate}}? <button type="button" (click)="openRegister()">{{'Create Account' | translate}}</button>
+            </div>
+
+            <div class="error-message" *ngIf="error" [class.show]="error">
+                <div class="error-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <span>{{ error | translate}}</span>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,387 @@
+<div class="deposit-wrapper">
+
+    <div class="deposit-card" *ngIf="!noPaymentMethods; else noMethods" >
+
+        <h2>
+            {{ 'Deposit of funds' | translate }}
+        </h2>
+<!-- <p style="color: #f00;">{{errormassage | translate}}</p> -->
+        <form
+            [formGroup]="depositForm"
+            (ngSubmit)="onDeposit()"
+        >
+
+            <!-- OPERATOR -->
+
+            <!-- <div class="form-group">
+
+                <label>
+                    {{ 'OPERATOR' | translate }}
+                </label>
+
+                <div class="operator-grid"> 
+
+                    <div
+                        class="operator-card"
+                        [class.active]="selectedOperator === 'Orange Money'"
+                        (click)="selectOperator('Orange Money')"
+                    >
+
+                        <img
+                            src="assets/images/orange-money.png"
+                            alt=""
+                        >
+
+                        <span>
+                            {{ 'Orange Money' | translate }}
+                        </span>
+
+                    </div> 
+
+                    <div
+                        class="operator-card"
+                        [class.active]="selectedOperator === 'Airtel Money'"
+                        (click)="selectOperator('Airtel Money')"
+                    >
+
+                        <img
+                            src="assets/images/airtel-money.png"
+                            alt=""
+                        >
+
+                        <span>
+                            {{ 'Airtel Money' | translate }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div> -->
+
+            <!-- AMOUNT -->
+            <!-- PAYMENT METHODS -->
+
+<!-- PAYMENT METHOD -->
+
+<div class="form-group">
+
+    <label>
+        {{ 'OPERATOR' | translate }}
+    </label>
+    <div class="payment-methods">
+
+        <button
+            type="button"
+            class="payment-btn"
+            *ngFor="let method of paymentMethods"
+            [class.active]="selectedPaymentMethod?.paymethod === method.paymethod"
+            (click)="onSelectPaymentMethod(method)"
+        >
+    
+            <!-- {{ method.paymethod }} -->
+            <img src="assets/{{method.paymethod}}.svg" alt="method.paymethod"  loading="lazy"/>
+    
+        </button>
+    
+    </div>
+
+</div>
+
+<!-- SUPPORTED SYSTEMS -->
+
+<div
+    class="form-group"
+    *ngIf="supportedSystems.length > 0"
+>
+
+    <label>
+        {{ 'SYSTEM' | translate }}
+    </label>
+
+    <div class="custom-dropdown">
+
+        <!-- Selected -->
+
+        <div class="dropdown-selected"
+            (click)="systemDropdownOpen = !systemDropdownOpen">
+
+            <span>
+                {{ selectedSystem }}
+            </span>
+
+            <i class="fas"
+                [class.fa-angle-up]="systemDropdownOpen"
+                [class.fa-angle-down]="!systemDropdownOpen">
+            </i>
+
+        </div>
+
+        <!-- Dropdown -->
+
+        <div
+            class="dropdown-menu"
+            *ngIf="systemDropdownOpen"
+        >
+
+            <div
+                class="dropdown-item"
+                *ngFor="let system of supportedSystems"
+                [class.active]="selectedSystem === system"
+                (click)="selectedSystem = system;
+                systemDropdownOpen = false"
+            >
+
+                <span>
+                    {{ system }}
+                </span>
+
+                <i
+                    class="fas fa-check"
+                    *ngIf="selectedSystem === system"
+                ></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="form-group">
+
+    <label>
+        {{ 'AMOUNT' | translate }}
+        ( {{type}} )
+    </label>
+
+    <!-- MIN MAX -->
+
+    <div class="limit-info"
+        *ngIf="selectedPaymentMethod">
+
+        <span>
+            Min :
+            {{ selectedPaymentMethod.minPayinValue }}
+        </span>
+
+        <span>
+            Max :
+            {{ selectedPaymentMethod.maxPayinValue }}
+        </span>
+
+    </div>
+
+    <!-- QUICK AMOUNTS -->
+
+    <div class="amount-list">
+
+        <button
+            type="button"
+            *ngFor="let amt of quickAmounts"
+            (click)="selectAmount(amt)"
+            [disabled]="
+              amt < selectedPaymentMethod?.minPayinValue ||
+              amt > selectedPaymentMethod?.maxPayinValue
+            "
+            [class.active]="selectedAmount === amt"
+        >
+
+            {{ amt | number }}
+
+        </button>
+
+    </div>
+
+    <!-- INPUT -->
+
+    <input
+        type="number"
+        formControlName="amount"
+        [placeholder]="
+        ('Min' | translate) + ' ' +
+        selectedPaymentMethod?.minPayinValue +
+        ' / Max ' +
+        selectedPaymentMethod?.maxPayinValue
+      "
+    >
+
+    <!-- ERROR -->
+
+    <div
+        class="error"
+        *ngIf="amount?.invalid && amount?.touched"
+    >
+
+        <span *ngIf="amount?.errors?.['required']">
+
+            {{'Amount is required' | translate}}
+
+        </span>
+
+        <span *ngIf="amount?.errors?.['min']">
+
+            {{'Minimum amount is' | translate}}
+            {{ selectedPaymentMethod?.minPayinValue }}
+
+        </span>
+
+        <span *ngIf="amount?.errors?.['max']">
+
+            {{'Maximum amount is' | translate}}
+            {{ selectedPaymentMethod?.maxPayinValue }}
+
+        </span>
+
+    </div>
+
+</div>
+            <!-- MOBILE -->
+
+            <div
+            class="form-group"
+            *ngIf="isMtnPayment"
+        >
+        
+            <label>
+                {{ 'MOBILE MONEY NUMBER' | translate }}
+            </label>
+        
+            <input
+                type="text"
+                formControlName="phone"
+                placeholder="Enter MTN number"  (keypress)="deposituse($event)"
+            >
+        
+            <div
+                class="error"
+                *ngIf="
+                    depositForm.get('phone')?.invalid &&
+                    depositForm.get('phone')?.touched
+                "
+            >
+        
+                <span
+                    *ngIf="depositForm.get('phone')?.errors?.['required']"
+                >
+                    Phone number is required
+                </span>
+        
+            </div>
+        
+        </div>
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="deposit-btn"
+                [disabled]="loading"
+            >
+
+                <span
+                    *ngIf="loading"
+                    class="btn-loader"
+                >
+                </span>
+
+                <span *ngIf="!loading">
+
+                    {{ 'Deposit' | translate }}
+                    {{type}}
+
+                </span>
+
+            </button>
+
+        </form>
+
+    </div>
+    <ng-template #noMethods>
+
+        <div class="no-payment-card">
+    
+            <div class="no-payment-icon">
+    
+                <i class="fas fa-wallet"></i>
+    
+            </div>
+    
+            <h3>
+                {{'Payment Methods Unavailable' | translate}}
+            </h3>
+    
+            <p>
+                {{'Currently no deposit methods are available. Please try again later.' | translate}}
+            </p>
+    
+        </div>
+    
+    </ng-template>
+</div>
+ 
+
+<!-- SUCCESS POPUP -->
+
+<!-- <div
+    class="popup-overlay"
+    *ngIf="showSuccessPopup"
+>
+
+    <div class="popup success-popup">
+
+        <div class="popup-icon success">
+            <i class="fas fa-check"></i>
+        </div>
+
+        <h3>
+            Success
+        </h3>
+
+        <p>
+            {{ successMessage }}
+        </p>
+
+        <button
+            type="button"
+            (click)="closePopup()"
+        >
+            OK
+        </button>
+
+    </div>
+
+</div> -->
+
+<!-- ERROR POPUP -->
+
+<div
+    class="popup-overlay"
+    *ngIf="showErrorPopup"
+>
+
+    <div class="popup error-popup">
+
+        <div class="popup-icon error">
+            <i class="fas fa-times"></i>
+        </div>
+
+        <h3>
+            {{'Error' | translate}}
+        </h3>
+
+        <p>
+            {{ errorMessage | translate}}
+        </p>
+
+        <button
+            type="button"
+            (click)="closePopup()"
+        >
+            {{'Close' | translate}}
+        </button>
+
+    </div>
+
+</div>

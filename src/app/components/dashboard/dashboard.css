@@ -1,0 +1,182 @@
+/* ================= MAIN LAYOUT ================= */
+
+.features {
+    width: 100%;
+    min-height: 100vh;
+    background: #030712;
+  }
+  
+  .features-container {
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 120px);
+  }
+  
+  /* ================= LEFT MENU ================= */
+  
+  .feature-tabs {
+    width: 230px;
+    min-width: 230px;
+  height: 100vh;
+    background: #111827;
+  
+    border-right: 1px solid rgba(255,255,255,0.08);
+  
+    padding: 14px;
+  
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* ================= MENU ITEM ================= */
+  
+  .tab-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  
+    padding: 14px 16px;
+  
+    border-radius: 8px;
+  
+    cursor: pointer;
+  
+    transition: 0.3s ease;
+  
+    color: #d1d5db;
+  margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  
+  .tab-item i {
+    font-size: 16px;
+    color: #facc15;
+  }
+  
+  .tab-item:hover {
+    background: rgba(255,255,255,0.05);
+  }
+  
+  .tab-item.active {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #fff;
+    box-shadow: none;
+  }
+  
+  /* ================= RIGHT CONTENT ================= */
+  .main_content {
+    width: 100%;
+    max-width: 580px;
+    padding: 15px;
+    background: #222d45;
+   border: 1px solid #515872;
+    border-radius: 10px;
+    height: 100%;
+}
+.main_content.full-width {
+  max-width: 100%;
+  width: 100%;
+}
+
+.feature-content.full-width{
+  max-width: 100%;
+  width: 100%;
+}
+.feature-content  {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px;
+    background: #040612;
+    min-height: calc(100vh - 120px);
+    border: none;
+    margin-top: 15px;
+}
+.header_bar {
+    width: 100%;
+    background: #20283a;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 5px;
+    text-transform: capitalize;
+}
+  /* ================= ROUTER CONTENT CARD ================= */
+  
+  .feature-content ::ng-deep .profile-card,
+  .feature-content ::ng-deep .content-card,
+  .feature-content ::ng-deep .account-card {
+  
+    width: 100%;
+    max-width: 550px;
+  
+    background: #1e293b;
+  
+    border-radius: 10px;
+  
+    padding: 30px;
+  
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  
+  /* ================= MOBILE ================= */
+  
+  @media (max-width: 991px) {
+  .feature-tabs{
+height: 100%;
+  }
+  .main_content{
+    padding: 0px;
+  }
+    .features-container {
+      flex-direction: column;
+      gap: 0;
+    }
+  
+    /* horizontal menu */
+  
+    .feature-tabs {
+  
+      width: 100%;
+      min-width: 100%;
+  
+      flex-direction: row;
+  
+      overflow-x: auto;
+      overflow-y: hidden;
+  
+      white-space: nowrap;
+  
+      border-right: none;
+  
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+  
+    .feature-tabs::-webkit-scrollbar {
+      display: none;
+    }
+  
+    .tab-item {
+      min-width: max-content;
+    }
+  
+    .feature-content {
+      width: 100%;
+      padding: 20px 12px;
+      margin-top: 0px;
+    }
+  
+    .feature-content ::ng-deep .profile-card,
+    .feature-content ::ng-deep .content-card,
+    .feature-content ::ng-deep .account-card {
+  
+      max-width: 100%;
+      padding: 20px;
+    }
+  
+  }

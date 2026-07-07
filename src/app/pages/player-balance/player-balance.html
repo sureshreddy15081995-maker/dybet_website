@@ -1,0 +1,146 @@
+<div class="balance-container content-panel active">
+    <!-- Profile & Balance Content -->
+    <div class="profile-container" *ngIf="playerDetails && !playerLevelloader; else loading"> 
+        <div class="balance-content">
+            <div class="content-header"> 
+                <h3>{{'Balance Overview' | translate}}</h3>
+                <div class="decorative-line"></div>
+            </div>
+ 
+            <div class="balance-grid">
+                <!-- Available Balance -->
+                <div class="balance-card available">
+                    <div class="balance-header">
+                        <i class="fas fa-wallet balance-icon"></i>
+                        <h3>{{'Available' | translate}}</h3>
+                    </div>
+                    <div class="balance-amount">
+                            {{currencysymbol}} {{ availableBalance | number:'1.2-2' }}
+                    </div>
+                    <div class="balance-footer">
+                        <span class="balance-label">{{'Instant Access' | translate}}</span>
+                    </div>
+                </div>
+
+                <!-- Bonus Balance -->
+                <div class="balance-card bonus">
+                    <div class="balance-header">
+                        <i class="fas fa-gift balance-icon"></i>
+                        <h3>{{'Bonus' | translate}}</h3>
+                    </div>
+                    <div class="balance-amount">
+                            {{currencysymbol}} {{ bonusBalance | number:'1.2-2' }}
+                    </div>
+                    <div class="balance-footer">
+                        <span class="balance-label">{{'Promotional Funds' | translate}}</span>
+                    </div>
+                </div>
+
+                <!-- In Play Balance -->
+                <div class="balance-card inplay">
+                    <div class="balance-header">
+                        <i class="fas fa-gamepad balance-icon"></i>
+                        <h3>{{'In Play' | translate}}</h3>
+                    </div>
+                    <div class="balance-amount">
+                            {{currencysymbol}} {{ inPlayBalance | number:'1.2-2' }}
+                    </div>
+                    <div class="balance-footer">
+                        <span class="balance-label">{{'Active Games' | translate}}</span>
+                    </div>
+                </div>
+
+                <!-- Total Balance -->
+                <div class="balance-card total">
+                    <div class="balance-header">
+                        <i class="fas fa-chart-pie balance-icon"></i>
+                        <h3>{{'Total' | translate}}</h3>
+                    </div>
+                    <div class="balance-amount">
+                            {{currencysymbol}} {{ totalBalance | number:'1.2-2' }}
+                    </div>
+                    <div class="balance-footer">
+                        <span class="balance-label">{{'Combined Balance' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIP Progress Section -->
+            <div class="vip-progress-section" *ngIf="vipObj.length > 0">
+                <div class="section-header">
+                    <h3 class="progress-title">{{'VIP Progress' | translate}}</h3>
+                    <div class="points-display">
+                        <span class="points-label">{{'Current Points' | translate}}:</span>
+                        <span class="points-value">{{ vipPoints }}</span>
+                    </div>
+                </div>
+
+                <div class="vip-progress-grid">
+                    <div class="progress-card" *ngFor="let vip of vipObj; let i = index">
+                        <div class="progress-header">
+                            <i class="fas fa-trophy progress-icon"></i>
+                            <h4>{{ vip.name }}</h4>
+                        </div>
+                        <div class="progress-info">
+                            <div class="points-required">
+                                <span class="points-label">{{'Points Required' | translate}}:</span>
+                                <span class="points-value">{{ vip.compPoints }}</span>
+                            </div>
+                            <div class="deadline">
+                                <i class="fas fa-clock deadline-icon"></i>
+                                <span class="deadline-text">{{ vip.endDate }}</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" [style.width.%]="calculateProgress(vip.compPoints)"></div>
+                            </div>
+                            <span class="progress-text">{{ calculateProgress(vip.compPoints) }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Points Summary -->
+            <!-- <div class="points-summary">
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <i class="fas fa-chart-line summary-icon"></i>
+                        <h3>Points Summary</h3>
+                    </div>
+                    <div class="points-grid">
+                        <div class="point-item">
+                            <span class="point-label">Weekly Points</span>
+                            <span class="point-value">{{ weeklyCollectedPints }}</span>
+                        </div>
+                        <div class="point-item">
+                            <span class="point-label">Monthly Points</span>
+                            <span class="point-value">{{ monthCollectedPints }}</span>
+                        </div>
+                        <div class="point-item">F$
+                            <span class="point-label">Yearly Points</span>
+                            <span class="point-value">{{ yearCollectedPints }}</span>
+                        </div>
+                        <div class="point-item">
+                            <span class="point-label">Gold Points</span>
+                            <span class="point-value">{{ goldPoints }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<!-- Loading State -->
+<ng-template #loading>
+    <section class="loading-section">
+        <div class="loading-container">
+            <div class="neon-spinner"></div>
+            <h2 class="loading-text">
+                {{ playerLevelloader ? 'Loading VIP Data...' : 'Loading Balance...' | translate}}
+            </h2>
+            <p class="loading-subtext">{{'Preparing your financial overview' | translate}}</p>
+        </div>
+    </section>
+</ng-template>

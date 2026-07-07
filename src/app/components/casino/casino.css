@@ -1,0 +1,238 @@
+/* withdrawal.component.scss */
+
+* {
+    box-sizing: border-box;
+  }
+  
+  .withdrawal-page {
+    display: flex;
+    min-height: 100vh;
+    background: #02031b;
+    color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* =========================
+     SIDEBAR
+  ========================= */
+  
+  .sidebar {
+    width: 240px;
+    background: #11182f;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+  
+  .sidebar-title {
+    padding: 18px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  
+  .menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-list li {
+    padding: 18px 24px;
+    color: #b6bfd8;
+    cursor: pointer;
+    transition: 0.3s;
+    border-left: 3px solid transparent;
+  }
+  
+  .menu-list li:hover {
+    background: rgba(255,255,255,0.03);
+    color: #fff;
+  }
+  
+  .menu-list li.active {
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    border-left: 3px solid #ffd400;
+  }
+  
+  /* =========================
+     CONTENT
+  ========================= */
+  
+  .content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  
+  /* =========================
+     CARD
+  ========================= */
+  
+  .withdraw-card {
+    width: 100%;
+    max-width: 520px;
+    background: #232d45;
+    border-radius: 8px;
+    padding: 35px;
+    border: 2px solid #ff2e2e;
+  }
+  
+  .withdraw-card h2 {
+    margin: 0 0 10px;
+    font-size: 34px;
+    font-weight: 700;
+  }
+  
+  .balance {
+    color: #b9c3dc;
+    margin-bottom: 30px;
+  }
+  
+  .balance span {
+    color: #00ff88;
+    font-weight: bold;
+  }
+  
+  /* =========================
+     FORM
+  ========================= */
+  
+  .form-group {
+    margin-bottom: 24px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #bfc8df;
+    margin-bottom: 10px;
+  }
+  
+  /* select,
+  input {
+    width: 100%;
+    height: 52px;
+    background: #121a31;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: #fff;
+    padding: 0 16px;
+    outline: none;
+    font-size: 15px;
+  }
+   */
+  select:focus,
+  input:focus {
+    border-color: #5865ff;
+  }
+  
+  /* =========================
+     AMOUNT BUTTONS
+  ========================= */
+  
+  .amount-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  
+  .amount-buttons button {
+    height: 42px;
+    border: none;
+    border-radius: 6px;
+    background: #121a31;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 600;
+  }
+  
+  .amount-buttons button:hover {
+    background: #3d4cff;
+  }
+  
+  /* =========================
+     BUTTON
+  ========================= */
+  
+  .withdraw-btn {
+    width: 100%;
+    height: 56px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #4b4cff, #6a5cff);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+  }
+  
+  .withdraw-btn:hover {
+    opacity: 0.9;
+  }
+  
+  /* =========================
+     INFO BOX
+  ========================= */
+  
+  .info-box {
+    margin-top: 25px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 18px;
+  }
+  
+  .info-box h4 {
+    margin-top: 0;
+    margin-bottom: 14px;
+    color: #8ab4ff;
+  }
+  
+  .info-box ul {
+    margin: 0;
+    padding-left: 18px;
+    color: #b8c0d8;
+    line-height: 1.8;
+    font-size: 14px;
+  }
+  
+  /* =========================
+     RESPONSIVE
+  ========================= */
+  
+  @media (max-width: 900px) {
+  
+    .withdrawal-page {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+    }
+  
+    .content {
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+  
+    .withdraw-card {
+      padding: 20px;
+    }
+  
+    .withdraw-card h2 {
+      font-size: 26px;
+    }
+  
+    .amount-buttons {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }

@@ -1,0 +1,184 @@
+<div class="transaction-history-container content-panel active">
+
+    <!-- Transaction History Content -->
+    <div class="history-content">
+        <!-- Header Section -->
+        <div class="content-header">
+            <div class="header-main">
+                <h2 class="section-title">{{'Transaction History' | translate}}</h2>
+                <p class="section-subtitle">{{'View your transaction details and status' | translate}}</p>
+            </div>
+            <div class="header-stats" *ngIf="transactions.length > 0">
+                <div class="stat-item">
+                    <i class="fas fa-receipt stat-icon"></i>
+                    <span class="stat-value">{{ transactions.length }}</span>
+                    <span class="stat-label">{{'Total Transactions' | translate}}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Card -->
+        <div class="filter-card">
+            <!-- <div class="filter-header">
+                <i class="fas fa-filter filter-icon"></i>
+                <h3>Filter Transactions</h3>
+            </div> -->
+
+            <form [formGroup]="transactionForm" (ngSubmit)="getTransactions()" class="filter-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="startDate" class="form-label">
+                            {{'Start Date' | translate}}
+                            <span class="required">*</span>
+                        </label>
+                        <div class="input-container">
+                            <i class="fas fa-calendar-alt input-icon"></i>
+                            <input type="date" id="startDate" formControlName="startDate" [max]="today"
+                                (change)="updateEndDateMin()" class="form-input" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDate" class="form-label">
+                            {{'End Date' | translate}}
+                            <span class="required">*</span>
+                        </label>
+                        <div class="input-container">
+                            <i class="fas fa-calendar-day input-icon"></i>
+                            <input type="date" id="endDate" formControlName="endDate"
+                                [min]="transactionForm.get('startDate')?.value" [max]="today" class="form-input"
+                                required />
+                        </div>
+                    </div>
+
+                    <div class="form-group submit-group">
+                        <button type="submit" class="btn btn-primary filter-btn"
+                            [disabled]="transactionForm.invalid || isLoading" [class.loading]="isLoading">
+                            <i class="fas" [class.fa-spinner]="isLoading" [class.fa-spin]="isLoading"
+                                [class.fa-search]="!isLoading">
+                            </i>
+                            {{ isLoading ? 'Loading...' : 'Show' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" *ngIf="transactions.length > 0">
+            <!-- Table Card -->
+            <div class="table-card">
+                <div class="table-header">
+                    <i class="fas fa-table table-icon"></i>
+                    <h3>{{'Transaction Records' | translate}}</h3>
+                    <div class="table-actions">
+                        <span class="records-count">
+                            {{'Showing' | translate}} {{ pagedTransactions.length }} {{'of' | translate}} {{ transactions.length }} {{'transactions' | translate}}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="transaction-table">
+                        <thead>
+                            <tr class="table_head_row">
+                                <th class="text-left">{{'Date & Time' | translate}}</th>
+                                <th class="text-right">{{'Amount' | translate}}</th>
+                                <th class="text-right">{{'Bonus' |
+                                 translate}}</th>
+                                <th class="text-center">{{'Status' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let tx of pagedTransactions" class="table-row">
+                                <td class="text-left date-cell"> 
+                                    {{ formatDisplayDate(tx.date) }}
+                                </td>
+                                <td class="text-right amount"> 
+                                    {{ tx.amount | number:'1.2-2' }}
+                                </td>
+                                <td class="text-right bonus"> 
+                                    {{ tx.bonus | number:'1.2-2' }}
+                                </td>
+                                <td class="text-center status-cell">
+                                    <span class="status-badge" [class]="getStatusClass(tx.status)">
+                                        <i class="status-icon" [class]="getStatusIcon(tx.status)"></i>
+                                        {{ tx.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr *ngIf="pagedTransactions.length === 0">
+                                <td colspan="4" class="no-data">
+                                    <div class="no-data-content">
+                                        <i class="fas fa-inbox no-data-icon"></i>
+                                        <span>{{'No records found for the selected page' | translate}}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination-section" *ngIf="transactions.length > itemsPerPage">
+                    <div class="pagination-info">
+                        <span class="pagination-text">
+                            {{'Showing' | translate}} {{ (currentPage - 1) * itemsPerPage + 1 }} {{'to' | translate}}
+                            {{ Math.min(currentPage * itemsPerPage, transactions.length) }} {{'of' | translate}}
+                            {{ transactions.length }} {{'entries' | translate}}
+                        </span>
+                    </div>
+
+                    <div class="pagination-controls">
+                        <div class="pagination-buttons">
+                            <button class="pagination-btn" (click)="goToPage(1)" [disabled]="currentPage === 1"
+                                title="First Page">
+                                <i class="fas fa-angle-double-left"></i>
+                            </button>
+                            <button class="pagination-btn" (click)="previousPage()" [disabled]="currentPage === 1"
+                                title="Previous Page">
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+
+                            <div class="page-numbers">
+                                <span class="page-info">{{'Page' | translate}} {{ currentPage }} {{'of' | translate}} {{ totalPages }}</span>
+                            </div>
+
+                            <button class="pagination-btn" (click)="nextPage()" [disabled]="currentPage === totalPages"
+                                title="Next Page">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                            <button class="pagination-btn" (click)="goToPage(totalPages)"
+                                [disabled]="currentPage === totalPages" title="Last Page">
+                                <i class="fas fa-angle-double-right"></i>
+                            </button>
+                        </div>
+
+                        <div class="page-size-selector">
+                            <label for="itemsPerPage" class="page-size-label">{{'Items per page' | translate}}:</label>
+                            <select id="itemsPerPage" [ngModel]="itemsPerPage"
+                                (ngModelChange)="onPageSizeChange($event)" class="page-size-select">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="transactions.length === 0 && !isLoading">
+            <div class="empty-content">
+                <i class="fas fa-exchange-alt empty-icon"></i>
+                <h3 class="empty-title">{{'No Transactions Found' | translate}}</h3>
+                <p class="empty-description">
+                   {{' Select a date range to view your transaction history.' | translate}}
+                    {{'Your deposit and withdrawal activities will appear here.' | translate}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

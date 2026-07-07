@@ -1,0 +1,50 @@
+<main class="app__main">
+    <div class="app__main-content">
+        <div class="home-desktop">
+            <div class="dashboard-content">
+                <div class="fd">
+                    <section class="features" id="features">
+                        <div class="header_bar">
+                    <img src="assets/profile/left_arrow.png" alt="left_arrow"  loading="lazy" routerLink="/home" style="cursor: pointer;">{{domainpathname | translate}}</div>
+                        <div class="features-container">
+                            <div class="feature-tabs">
+                                <div class="tab-item" [class.active]="isActive('/profile')" routerLink="/profile">
+                                    <i class="fas fa-user"></i>
+                                    <span class="text">{{'Profile' | translate}}</span>
+                                </div>
+                                <div class="tab-item" [class.active]="isActive('/balance')" routerLink="/balance">
+                                    <i class="fas fa-wallet"></i>
+                                    <span class="text">{{'My Balance' | translate}}</span>
+                                </div>
+                                <div class="tab-item" [class.active]="isActive('/deposit')" routerLink="/deposit">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span class="text">{{'Deposit' | translate}}</span>
+                                </div>
+                                <div class="tab-item" [class.active]="isActive('/cashout')" routerLink="/cashout">
+                                    <i class="fas fa-wallet"></i>
+                                    <span class="text">{{ 'Cashouts' | translate }}</span>
+                                </div>
+                                <div class="tab-item" [class.active]="isActive('/transactions')"
+                                    routerLink="/transactions">
+                                    <i class="fas fa-exchange-alt"></i>
+                                    <span class="text">{{'Transactions' | translate}}</span>
+                                </div>
+                                <div class="tab-item" [class.active]="isActive('/game-history')"
+                                    routerLink="/game-history">
+                                    <i class="fas fa-history"></i>
+                                    <span class="text">{{'Game History' | translate}}</span>
+                                </div>
+                            </div>
+                            <div class="feature-content"   [class.full-width]="isFullWidthPage()">
+                                <div class="main_content"    [class.full-width]="isFullWidthPage()">
+                                    <router-outlet></router-outlet>
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

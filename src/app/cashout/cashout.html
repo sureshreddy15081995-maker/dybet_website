@@ -1,0 +1,150 @@
+<!-- MARKED CENTER UI -->
+
+<div class="withdraw-wrapper">
+
+    <div class="withdraw-card">
+
+        <h2>{{ 'Withdrawal of funds' | translate }}</h2>
+        <!-- <p class="balance">
+            {{ 'Balance' | translate }}:
+            <span>{{cash}} {{type}}</span>
+        </p> -->
+        <form [formGroup]="withdrawalForm" (ngSubmit)="onWithdraw()">
+  
+        <div class="form-group">
+
+            <label>{{ 'AMOUNT' | translate }} ({{type}})</label>
+            <div class="amount-list">
+
+                <button  type="button" [class.active]="selectedAmount === 1000" (click)="selectAmount(1000)">1,000</button>
+                <button  type="button" [class.active]="selectedAmount === 5000" (click)="selectAmount(5000)">5,000</button>
+                <button  type="button" [class.active]="selectedAmount === 10000"(click)="selectAmount(10000)">10,000</button>
+                <button  type="button" [class.active]="selectedAmount === 50000"(click)="selectAmount(50000)">50,000</button>
+
+            </div>
+
+            <input
+            type="number"
+            formControlName="amount"
+            [placeholder]="('Min' | translate) + ' 1000 ' + type"
+        >
+        
+        </div>
+
+        <!-- MOBILE -->
+        <div class="form-group" *ngIf="profile">
+
+            <label>{{ 'MOBILE MONEY NUMBER' | translate }}</label>
+
+            <input
+            type="text"
+            [placeholder]="'Enter Mobile Number' | translate"
+            [(ngModel)]="mobileNumber"
+            [ngModelOptions]="{standalone: true}"  >
+
+        </div>
+        <div class="error" *ngIf="amount?.invalid && amount?.touched">
+            <span *ngIf="amount?.errors?.['required']">
+                {{ 'Amount is required' | translate }}
+            </span>        
+            <span *ngIf="amount?.errors?.['min']">
+                {{ 'Minimum amount is 1000' | translate }}
+            </span>        
+            <span *ngIf="amount?.errors?.['max']">
+                {{ 'Maximum amount is 500000' | translate }}
+            </span>        
+            <span *ngIf="amount?.errors?.['pattern']">
+                {{ 'Only numbers allowed' | translate }}
+            </span>        
+        </div>
+     <button
+     type="submit"
+     class="withdraw-btn"
+     [disabled]="loading || withdrawalForm.invalid"
+ >
+ 
+     <span *ngIf="loading" class="btn-loader"></span>
+ 
+     <span *ngIf="!loading">
+         {{ 'Withdraw' | translate }} {{type}}
+     </span>
+ 
+ </button>
+</form>
+        <!-- INFO -->
+        <!-- <div class="info-box">
+
+            <h4>{{ 'Withdrawal information' | translate }}</h4>
+
+            <ul>
+                <li>{{ 'Delivery time: 24 business hours' | translate }}</li>
+                <li>{{ 'First 3 withdrawals are free' | translate }}</li>
+                <li>{{ 'Fee' | translate }}: 500 {{type}}</li>
+                <li>{{ 'Minimum' | translate }}: 1000 {{type}}</li>
+            </ul>
+
+        </div> -->
+
+    </div>
+
+</div>
+<div
+    class="popup-overlay"
+    *ngIf="showErrorPopup"
+>
+
+    <div class="popup error-popup">
+
+        <div class="popup-icon error">
+            <i class="fas fa-times"></i>
+        </div>
+
+        <h3>
+            {{'Error' | translate}}
+        </h3>
+
+        <p>
+            {{ errorMessage | translate}}
+        </p>
+
+        <button
+            type="button"
+            (click)="closePopup()"
+        >
+            {{'Close' | translate}}
+        </button>
+
+    </div>
+
+</div>
+<!-- SUCCESS POPUP -->
+
+<div
+    class="popup-overlay"
+    *ngIf="showSuccessPopup"
+>
+
+    <div class="popup success-popup">
+
+        <div class="popup-icon success">
+            <i class="fas fa-check"></i>
+        </div>
+
+        <h3>
+            Success
+        </h3>
+
+        <p>
+            {{ errorMessage }}
+        </p>
+
+        <button
+            type="button"
+            (click)="closePopup()"
+        >
+            OK
+        </button>
+
+    </div>
+
+</div>

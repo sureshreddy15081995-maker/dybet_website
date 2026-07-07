@@ -1,0 +1,152 @@
+     .download-section {
+         width: 100%;
+         max-width: 1200px;
+         padding: var(--spacing-xxl);
+         margin: 0 auto;
+     }
+
+     .section-header {
+         text-align: center;
+         margin-bottom: var(--spacing-xxl);
+     }
+
+     .section-title {
+         font-family: var(--font-heading);
+         font-size: var(--text-xxxl);
+         font-weight: var(--font-weight-bold);
+         margin-bottom: var(--spacing-sm);
+         color: var(--color-primary);
+         text-shadow: 0 0 10px var(--color-text-shadow);
+         letter-spacing: 1px;
+     }
+
+     .section-subtitle {
+         font-size: var(--text-lg);
+         color: var(--color-secondary);
+         max-width: 600px;
+         margin: 0 auto;
+         line-height: 1.6;
+     }
+
+     .download-grid {
+         display: grid;
+         /* grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); */
+         grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+         gap: var(--spacing-lg);
+     }
+
+     .download-card {
+         background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(10, 10, 10, 0.9));
+         border: 1px solid var(--color-border-light);
+         border-radius: var(--border-radius-lg);
+         padding: var(--spacing-xl);
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         text-align: center;
+         transition: var(--transition-medium);
+         position: relative;
+         overflow: hidden;
+         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+     }
+
+     .download-card::before {
+         content: '';
+         position: absolute;
+         top: 0;
+         left: 0;
+         right: 0;
+         height: 3px;
+         background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+         transform: scaleX(0);
+         transition: transform var(--transition-medium);
+     }
+
+     .download-card:hover {
+         transform: translateY(-5px);
+         box-shadow: 0 10px 25px rgba(5, 214, 142, 0.2);
+     }
+
+     .download-card:hover::before {
+         transform: scaleX(1);
+     }
+
+     .platform-icon {
+         width: 70px;
+         height: 70px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         margin-bottom: var(--spacing-lg);
+         border-radius: var(--border-radius-circle);
+         background: rgba(5, 214, 142, 0.1);
+         font-size: var(--text-xxl);
+         color: var(--color-primary);
+         transition: var(--transition-medium);
+     }
+
+     .download-card:hover .platform-icon {
+         background: rgba(5, 214, 142, 0.2);
+         transform: scale(1.1);
+     }
+
+     .platform-name {
+         font-family: var(--font-heading);
+         font-size: var(--text-xl);
+         font-weight: var(--font-weight-bold);
+         margin-bottom: var(--spacing-xs);
+         color: var(--color-white);
+     }
+
+     .platform-format {
+         font-size: var(--text-md);
+         color: var(--color-secondary);
+         margin-bottom: var(--spacing-md);
+     }
+
+     .download-btn {
+         display: inline-flex;
+         align-items: center;
+         gap: var(--spacing-sm);
+         background: linear-gradient(90deg, var(--color-primary), #04b87a);
+         color: var(--color-bg);
+         padding: var(--spacing-sm) var(--spacing-xl);
+         border-radius: var(--border-radius-xl);
+         text-decoration: none;
+         font-weight: var(--font-weight-bold);
+         font-size: var(--text-md);
+         transition: var(--transition-medium);
+         margin-top: auto;
+         border: none;
+         cursor: pointer;
+         box-shadow: 0 4px 10px rgba(5, 214, 142, 0.3);
+     }
+
+     .download-btn:hover {
+         transform: translateY(-2px);
+         box-shadow: 0 6px 15px rgba(5, 214, 142, 0.5);
+     }
+
+     .download-btn i {
+         font-size: var(--text-lg);
+     }
+
+     .file-size {
+         margin-top: var(--spacing-sm);
+         font-size: var(--text-sm);
+         color: rgba(255, 255, 255, 0.6);
+     }
+
+     @media (max-width: 768px) {
+         .download-grid {
+             grid-template-columns: 1fr;
+         }
+
+         .section-title {
+             font-size: var(--text-xxl);
+         }
+
+         .download-section {
+             padding: var(--spacing-lg);
+         }
+     }

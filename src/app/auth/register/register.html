@@ -1,0 +1,240 @@
+<div class="register-modal" *ngIf="isVisible">
+  <div class="register-box">
+
+    <!-- Header -->
+    <div class="register-header">
+
+      <h2>
+        {{ 'REGISTRATION_ON' | translate }}
+        <span>DYBET</span>
+      </h2>
+
+      <button class="close-btn" (click)="closeRegister()">
+        ✕
+      </button>
+
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
+
+      <!-- FIRST + LAST -->
+      <div class="form-row">
+
+        <div class="form-group" [class.error]="firstNameControl?.invalid && firstNameControl?.touched">
+
+          <label>{{ 'FIRST_NAME' | translate }}</label>
+
+          <input type="text" formControlName="firstName" placeholder="John">
+
+          <small *ngIf="firstNameControl?.errors?.['required'] && firstNameControl?.touched">
+            {{ 'FIRST_NAME_REQUIRED' | translate }}
+          </small>
+
+          <small *ngIf="firstNameControl?.errors?.['minlength']">
+            {{ 'FIRST_NAME_MIN' | translate }}
+          </small>
+          <small *ngIf="firstNameControl?.errors?.['pattern'] && firstNameControl?.touched">
+            {{'FIRST_NAME_PATTERN' | translate}}
+          </small>
+
+        </div>
+
+        <div class="form-group" [class.error]="lastNameControl?.invalid && lastNameControl?.touched">
+
+          <label>{{ 'LAST_NAME' | translate }}</label>
+
+          <input type="text" formControlName="lastName" placeholder="Doe">
+
+          <small *ngIf="lastNameControl?.errors?.['required'] && lastNameControl?.touched">
+            {{ 'LAST_NAME_REQUIRED' | translate }}
+          </small>
+          <small *ngIf="lastNameControl?.errors?.['minlength']">
+            {{ 'FIRST_NAME_MIN' | translate }}
+          </small>
+          <small *ngIf="lastNameControl?.errors?.['pattern'] && lastNameControl?.touched">
+            {{'FIRST_NAME_PATTERN' | translate}}
+          </small>
+        </div>
+
+      </div>
+
+      <!-- EMAIL -->
+      <div class="form-group" [class.error]="emailControl?.invalid && emailControl?.touched">
+
+        <label>{{ 'EMAIL' | translate }}</label>
+
+        <input type="email" formControlName="email" placeholder="john@example.com">
+
+        <small *ngIf="emailControl?.errors?.['required'] && emailControl?.touched">
+          {{ 'EMAIL_REQUIRED' | translate }}
+        </small>
+
+        <small *ngIf="emailControl?.errors?.['email']">
+          {{ 'INVALID_EMAIL' | translate }}
+        </small>
+
+      </div>
+
+      <!-- PHONE + DOB -->
+      <div class="form-row">
+
+        <div class="form-group" [class.error]="phoneControl?.invalid && phoneControl?.touched">
+
+          <label>{{ 'PHONE_NUMBER' | translate }}</label>
+
+          <input type="text" formControlName="phone" placeholder="9876543210" maxlength="12"   inputmode="numeric"  pattern="[0-9]*"
+          (keypress)="allowNumbersOnly($event)"/>
+
+          <small *ngIf="phoneControl?.errors?.['required'] && phoneControl?.touched">
+            {{ 'PHONE_REQUIRED' | translate }}
+          </small>
+
+          <small *ngIf="phoneControl?.errors?.['pattern']">
+            {{ 'INVALID_PHONE' | translate }}
+          </small>
+
+        </div>
+
+        <div class="form-group" [class.error]="dobControl?.invalid && dobControl?.touched">
+
+          <label>{{ 'DATE_OF_BIRTH' | translate }}</label>
+
+          <input
+          type="date"
+          formControlName="dob"
+          [max]="maxDate">
+
+          <small *ngIf="dobControl?.errors?.['required'] && dobControl?.touched">
+            {{ 'DOB_REQUIRED' | translate }}
+          </small>
+          <small *ngIf="dobControl?.errors?.['underAge']">
+            You must be 18 years or older
+          </small>
+        </div>
+
+      </div>
+
+      <!-- COUNTRY + CITY -->
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label>{{ 'COUNTRY' | translate }}</label>
+
+          <input type="text" value="COG (CDF)" readonly class="readonly-input">
+
+        </div>
+
+        <div class="form-group" [class.error]="cityControl?.invalid && cityControl?.touched">
+
+          <label>{{ 'CITY' | translate }}</label>
+
+          <input type="text" formControlName="city" placeholder="Kinshasa">
+
+          <small *ngIf="cityControl?.errors?.['required'] && cityControl?.touched">
+            {{ 'CITY_REQUIRED' | translate }}
+          </small>
+
+        </div>
+
+      </div>
+
+      <!-- USERNAME -->
+      <div class="form-group" [class.error]="loginControl?.invalid && loginControl?.touched">
+
+        <label>{{ 'USERNAME' | translate }}</label>
+
+        <input type="text" formControlName="login" placeholder="Username">
+
+        <small *ngIf="loginControl?.errors?.['required'] && loginControl?.touched">
+          {{ 'USERNAME_REQUIRED' | translate }}
+        </small>
+
+        <small *ngIf="loginControl?.errors?.['minlength']">
+          {{ 'USERNAME_MIN' | translate }}
+        </small>
+
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="form-group" [class.error]="passwordControl?.invalid && passwordControl?.touched">
+
+        <label>{{ 'PASSWORD' | translate }}</label>
+
+        <div class="password-wrapper">
+
+          <input [type]="passwordVisible ? 'text' : 'password'" formControlName="password" placeholder="Password">
+
+          <button type="button" class="show-btn" (click)="togglePasswordVisibility()">
+
+            {{ passwordVisible ? ('HIDE' | translate) : ('SHOW' | translate) }}
+
+          </button>
+
+        </div>
+
+        <small *ngIf="passwordControl?.errors?.['required'] && passwordControl?.touched">
+          {{ 'PASSWORD_REQUIRED' | translate }}
+        </small>
+
+        <small *ngIf="passwordControl?.errors?.['minlength']">
+          {{ 'PASSWORD_MIN' | translate }}
+        </small>
+
+      </div>
+
+      <!-- TERMS -->
+      <div class="remember-me">
+
+        <label class="checkbox-container">
+
+          <input type="checkbox" [checked]="termsAccepted" (change)="onCheckedTerms()" />
+
+          <span class="checkmark"></span>
+
+          <span class="terms-text">
+
+            {{ 'I_AGREE_WITH' | translate }}
+
+            <a class="terms-link" (click)="navigateToTerms()">
+
+              {{ 'TERMS_AND_CONDITIONS' | translate }}
+
+            </a>
+
+            {{ 'AND' | translate }}
+
+            <a class="terms-link" (click)="navigateToPrivacy()">
+
+              {{ 'PRIVACY_POLICY' | translate }}
+
+            </a>
+
+          </span>
+
+        </label>
+
+        <!-- ERROR -->
+        <small class="terms-error" *ngIf="showTermsError">
+
+          {{ 'PLEASE_ACCEPT_TERMS' | translate }}
+
+        </small>
+
+      </div>
+
+      <!-- BUTTON -->
+      <button class="register-btn" type="submit" [disabled]="registerForm.invalid || isLoading">
+
+        {{
+        isLoading
+        ? ('CREATING_ACCOUNT' | translate)
+        : ('REGISTER' | translate)
+        }}
+
+      </button>
+
+    </form>
+
+  </div>
+</div>
