@@ -127,8 +127,30 @@
   .footer-bottom p {
     font-size: 13px;
     color: #7f8b9d;
+    margin: 0;
   }
-  
+
+  .footer-copy-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .footer-brand-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .footer-logo { 
+    width: 100%;
+    height: 40px;
+    object-fit: scale-down;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
   .top-btn { 
       color: #cfd6e2;
       text-decoration: none;
@@ -251,7 +273,7 @@
     }
   
     .footer-bottom {
-      flex-direction: column;
+      /* flex-direction: column; */
       gap: 15px;
       align-items: flex-start;
     }

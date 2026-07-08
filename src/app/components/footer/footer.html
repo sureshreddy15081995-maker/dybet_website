@@ -91,10 +91,14 @@
       <!-- Bottom -->
       <div class="footer-bottom">
   
-        <p aria-label="copyright">
-          © {{year}} Dybet.
-          {{ 'All rights reserved. Licensed sports betting and casino platform.' | translate }}
-        </p>
+        <div class="footer-copy-block">
+          <p aria-label="copyright">
+            © {{year}} Dybet.
+            {{ 'All rights reserved. Licensed sports betting and casino platform.' | translate }}
+          </p>
+  
+          <!-- <a href="https://czargaming.com/" target="_self" rel="noopener noreferrer">https://czargaming.com/</a> -->
+        </div>
         <div class="custom-language-dropdown mobile_black" (click)="toggleDropdown()">
 
           <div class="selected-language">
@@ -105,20 +109,14 @@
           </div>
         
           <div
-            class="dropdown-menu"
-            *ngIf="dropdownOpen"
-          >
-        
+            class="dropdown-menu" *ngIf="dropdownOpen" >        
             <div
               class="dropdown-item"
               *ngFor="let lang of languages"
               (click)="changeLanguage(lang.code)"
-              [class.active]="selectedLanguage === lang.code"
-            >
-        
+              [class.active]="selectedLanguage === lang.code">        
             <img src="assets/language/{{lang.code}}.png" [alt]="lang.name" width="24" height="24"  loading="lazy">  {{ lang.name }}
-        
-              <span *ngIf="selectedLanguage === lang.code">
+                      <span *ngIf="selectedLanguage === lang.code">
                 ✓
               </span>
         
@@ -133,6 +131,10 @@
         </button>
   
       </div>
-  
+          <div class="footer-brand-row m_t_10">
+            <a href="https://czargaming.com/" target="_self" rel="noopener noreferrer">
+              <img src="assets/footerlogo.png" alt="Footer logo" class="footer-logo" loading="lazy">
+            </a>
+          </div>
     </div>
   </footer>
